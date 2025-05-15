@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Top-Up & Subscriptions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #1e2a38;
+      padding: 30px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+
+    h2 {
+      color: #f1c40f;
+      margin-bottom: 25px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background-color: #34495e;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    select:focus, input:focus {
+      outline: 2px solid #f1c40f;
+    }
+
+    .copy-box {
+      margin-bottom: 15px;
+    }
+
+    .copy-text {
+      background: #34495e;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      color: #f1c40f;
+    }
+
+    .copy-text button {
+      background: #27ae60;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .copy-text button:hover {
+      background: #1abc9c;
+    }
+
+    .payment-hint {
+      display: none;
+      background-color: #27ae60;
+      color: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .payment-hint.show {
+      display: block;
+    }
+
+    button.submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #16a085, #27ae60);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+
+    button.submit-btn:hover {
+      background: linear-gradient(to right, #1abc9c, #2ecc71);
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    footer hr {
+      border-color: #444;
+      margin-bottom: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔥 Top-Up & Subscriptions 🔥</h2>
+
+    <!-- Copy Number Box -->
+    <div class="copy-box">
+      <div class="copy-text">
+        Send Money: <span id="copyNumber">01819441618</span>
+        <button onclick="copyNumber()">Copy</button>
+      </div>
+    </div>
+
+    <input type="text" placeholder="Enter your Free Fire ID" id="freeFireId" />
+
+    <select id="diamondPackage">
+      <option disabled selected>Select Package</option>
+      <option value="25 Diamonds - ৳30">25 Diamonds - ৳30</option>
+      <option value="50 Diamonds - ৳50">50 Diamonds - ৳50</option>
+      <option value="115 Diamonds - ৳85">115 Diamonds - ৳85</option>
+      <option value="240 Diamonds - ৳185">240 Diamonds - ৳185</option>
+      <option value="610 Diamonds - ৳420">610 Diamonds - ৳420</option>
+      <option value="1240 Diamonds - ৳820">1240 Diamonds - ৳820</option>
+      <option value="2530 Diamonds - ৳1610">2530 Diamonds - ৳1610</option>
+      <option value="Weekly Membership - ৳175">Weekly Membership - ৳175</option>
+      <option value="Monthly Membership - ৳850">Monthly Membership - ৳850</option>
+      <option value="Weekly Lite - ৳45">Weekly Lite - ৳45</option>
+      <option value="Level Up Pass - ৳165">Level Up Pass - ৳165</option>
+      <option value="YouTube 1 Month - ৳150">YouTube 1 Month - ৳150</option>
+      <option value="Canva Pro 1 Year - ৳180">Canva Pro 1 Year - ৳180</option>
+      <option value="Amazon Prime 3 Months - ৳480">Amazon Prime 3 Months - ৳480</option>
+      <option value="Netflix 1 Month - ৳400">Netflix 1 Month - ৳400</option>
+      <option value="Netflix + Prime Combo - ৳580">Netflix + Prime Combo - ৳580</option>
+    </select>
+
+    <select id="paymentMethod" onchange="updateNote()">
+      <option value="" disabled selected>Select Payment Method</option>
+      <option value="bKash">bKash</option>
+      <option value="Nagad">Nagad</option>
+    </select>
+
+    <div class="payment-hint" id="paymentHint">
+      <!-- এই খানে চাইলে অতিরিক্ত ইনফো যোগ করা যাবে -->
+    </div>
+
+    <input type="text" placeholder="Enter your Transaction ID" id="transactionId" />
+    <input type="text" placeholder="Your Number (used to pay)" id="paymentNumber" />
+
+    <button class="submit-btn" onclick="submitOrder()">SUBMIT</button>
+
+    <!-- Footer -->
+    <footer>
+      <hr />
+      <p>© Ahmed Rabby — All Rights Reserved</p>
+    </footer>
+  </div>
+
+  <script>
+    function copyNumber() {
+      const number = document.getElementById("copyNumber").innerText;
+      navigator.clipboard.writeText(number).then(() => {
+        alert("Number copied: " + number);
+      });
+    }
+
+    function updateNote() {
+      const method = document.getElementById("paymentMethod").value;
+      const hint = document.getElementById("paymentHint");
+      hint.textContent = method ? `Send Money: 01819441618 (${method})` : "";
+      // এখানে যদি চাইলে hint এর স্টাইল পরিবর্তন করতে পারো
+      if(method) {
+        hint.style.display = "block";
+      } else {
+        hint.style.display = "none";
+      }
+    }
+
+    function submitOrder() {
+      const freeFireId = document.getElementById("freeFireId").value.trim();
+      const diamondPackage = document.getElementById("diamondPackage").value;
+      const paymentMethod = document.getElementById("paymentMethod").value;
+      const transactionId = document.getElementById("transactionId").value.trim();
+      const paymentNumber = document.getElementById("paymentNumber").value.trim();
+
+      if (!freeFireId || !diamondPackage || !paymentMethod || !transactionId || !paymentNumber) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const message =
+        `Free Fire ID: ${freeFireId}\n` +
+        `Package: ${diamondPackage}\n` +
+        `Payment Method: ${paymentMethod}\n` +
+        `Transaction ID: ${transactionId}\n` +
+        `Payment Number: ${paymentNumber}`;
+
+      const whatsappUrl = `https://wa.me/8801819441618?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, "_blank");
+    }
+  </script>
+</body>
+</html>
